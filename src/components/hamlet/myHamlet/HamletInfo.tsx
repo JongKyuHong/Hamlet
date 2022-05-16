@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import OneQuestion from "./OneQuestion";
+import OneQuestion from "../OneQuestion";
 
 const Questions = [
   {

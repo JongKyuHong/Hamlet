@@ -8,7 +8,6 @@ import Signup from "./pages/SignUp/signup";
 import WaitingRoomPlayer from "./pages/WaitingRoomPlayer/WaitingRoomPlayer";
 import Game from "./pages/Game/Game";
 import Admin from "./pages/Admin/Admin";
-import { question } from "./types";
 import Quiz from "./components/Problem/Quiz/Quiz";
 import MainforPlayer from "./pages/Main/MainforPlayer";
 import Hamlet from "./pages/hamlet/Hamlet";
@@ -25,7 +24,7 @@ function App() {
         <Route path="/Game" element={<Game />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/quiz" element={<Quiz />} />
-        <Route path="/hemlet" element={<Hamlet />} />
+        <Route path="/hamlet" element={<Hamlet />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,17 +1,15 @@
 import styled from "styled-components";
 import CreateQuestion from "./CreateQuestion";
-import HamletInfo from "./HamletInfo";
 
 interface props {
   offModal: () => void;
 }
 
-const AddNewHamletView = ({ offModal }: props) => {
+const AddQuestion = ({ offModal }: props) => {
   return (
     <Frame>
       <Blur />
       <Modal>
-        <HamletInfo />
         <CreateQuestion />
         <ModalOff onClick={offModal}>
           <div />
@@ -30,9 +28,17 @@ const Frame = styled.div`
   left: 0;
 `;
 
+const Blur = styled.div`
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #ffffff25;
+  backdrop-filter: blur(3px);
+`;
+
 const Modal = styled.div`
   position: absolute;
-  width: 50vw;
+  width: 30vw;
   height: 60vh;
   background-color: #ff7900;
   border-radius: 50px;
@@ -48,14 +54,6 @@ const Modal = styled.div`
   gap: 50px;
 
   padding: 50px;
-`;
-
-const Blur = styled.div`
-  width: 100vw;
-  height: 100vh;
-
-  background-color: #ffffff25;
-  backdrop-filter: blur(3px);
 `;
 
 const ModalOff = styled.button`
@@ -92,4 +90,5 @@ const ModalOff = styled.button`
     transform: rotate(-90deg);
   }
 `;
-export default AddNewHamletView;
+
+export default AddQuestion;
