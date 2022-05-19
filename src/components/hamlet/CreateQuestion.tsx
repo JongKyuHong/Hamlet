@@ -1,41 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import { config } from "../../rest";
+import { Questtions } from "../Type/Hamlets/Hamlets";
 import Example from "./Example";
+import axios from "axios";
 
-const CreateQuestion = () => {
+interface props {
+  selectedQuestions: Questtions;
+}
+
+const CreateQuestion = ({ selectedQuestions }: props) => {
   const [select, setSelect] = useState<number>(0);
-  const [testExample, setTestExample] = useState([
-    {
-      id: 0,
-      content: "1111111111",
-      isAnswer: true,
-    },
-    {
-      id: 1,
-      content: "",
-      isAnswer: false,
-    },
-    {
-      id: 2,
-      content: "",
-      isAnswer: false,
-    },
-    {
-      id: 3,
-      content: "",
-      isAnswer: false,
-    },
-    {
-      id: 4,
-      content: "",
-      isAnswer: false,
-    },
-  ]);
+  const [questtions, setQuesttions] = useState<Questtions>(selectedQuestions);
 
-  const setExample = (id: number, data: string) => {
-    setTestExample(
-      testExample.map((t) => (t.id === id ? { ...t, content: data } : t))
-    );
+  const onChangeExample = (id: number, input: string) => {
+    // console.log("questtions", questtions);
+    // console.log("또잉? ", questtions.options[questtions.options.length - 1]);
+
+    console.log(questtions.options);
+    setQuesttions({
+      ...questtions,
+      options: questtions.options.map((t: any) => {
+        return t.optionId === id ? { ...t, contents: input } : t;
+      }),
+    });
   };
 
   const selectClick = (num: number): void => {
@@ -43,12 +31,47 @@ const CreateQuestion = () => {
   };
 
   const checkAnswer = (id: number) => {
-    setTestExample(
-      testExample.map((t) =>
-        t.id === id ? { ...t, isAnswer: !t.isAnswer } : t
-      )
-    );
+    // setQuesttions(
+    //   questtions.map((t) => (t.questionId === id ? { ...t, isAnswer: !t.answer } : t))
+    // );
   };
+
+  // const addExample = () => {
+  //   setQuesttions({
+  //     ...questtions,
+  //     options: [
+  //       ...questtions.options,
+  //       {
+  //         contents: "",
+  //         answer: false,
+  //       },
+  //     ],
+  //   });
+  // };
+
+  const addExample = () => {
+    setQuesttions({
+      ...questtions,
+      options: questtions.options.concat([
+        {
+          optionId: questtions.options.length + 1,
+          contents: "",
+          answer: false,
+        },
+      ]),
+    });
+  };
+
+  const putQuestion = async () => {
+    const response = await axios.put(
+      `http://k6a206.p.ssafy.io:8080/questions/${selectedQuestions.questionId}`,
+      { params: questtions }
+    );
+
+    console.log("response", response);
+  };
+
+  // console.log("questtions", questtions);
 
   return (
     <CreateQuestionSection>
@@ -83,26 +106,33 @@ const CreateQuestion = () => {
               </Setting>
             </div>
           </QuestionSetting>
-          <QuestionText placeholder="질문을 입력하세요." />
+          <QuestionText
+            placeholder="질문을 입력하세요."
+            value={questtions.contents}
+            readOnly
+          />
           <Explan>
             <p>보기</p>
             <p>정답</p>
           </Explan>
           <Examples>
-            {testExample.map((exam) => (
+            {questtions.options.map((exam, i) => (
               <Example
-                key={exam.id}
+                key={`${exam.optionId}_${i}`}
+                isAnswer={true}
                 checkAnswer={checkAnswer}
-                setExample={setExample}
-                {...exam}
+                onChangeExample={onChangeExample}
+                contents={exam.contents}
+                id={exam.optionId}
+                // {...exam}
               />
             ))}
             <AddExample>
-              <div />
+              <div onClick={addExample} />
             </AddExample>
           </Examples>
         </Question>
-        <PatchBtn>수정</PatchBtn>
+        <PatchBtn onClick={putQuestion}>수정</PatchBtn>
       </QuestionForm>
     </CreateQuestionSection>
   );

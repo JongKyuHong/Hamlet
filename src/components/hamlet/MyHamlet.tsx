@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import plus from "../../images/plus.svg";
 import AddNewHamlet from "./addNewHamlet/AddNewHamlet";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Hamlet } from "../Type/Hamlets/Hamlets";
+import { config } from "../../rest";
 
 const hemletData = [
   { name: "햄릿1", color: "#FFB34F" },
@@ -14,6 +18,8 @@ const hemletData = [
   { name: "햄릿4", color: "#87BAF9" },
 ];
 
+const colors = ["#FF92F1", "#FFB34F", "#87BAF9"];
+
 interface props {
   showModal: boolean;
   onModal: () => void;
@@ -21,25 +27,52 @@ interface props {
 }
 
 const MyHamlet = ({ showModal, onModal, offModal }: props) => {
+  const [hamlets, setHamlets] = useState<Hamlet[]>();
+  const [selectedId, setSelectedID] = useState<number>();
+  const getHamlets = async () => {
+    try {
+      const response = await axios.get(
+        "http://k6a206.p.ssafy.io:8080/hamlets",
+        config
+      );
+      setHamlets(response.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getHamlets();
+  }, []);
   return (
     <>
       <MyHamlets>
         <Scroll>
-          {hemletData.map((hd, i) => (
-            <OneHamlet key={i} color={hd.color}>
-              <p>{hd.name}</p>
-              <DelBtn>
-                <div />
-              </DelBtn>
-            </OneHamlet>
-          ))}
+          {hamlets &&
+            hamlets.map((hd, i) => (
+              <OneHamlet
+                key={i}
+                color={colors[i]}
+                onClick={() => {
+                  onModal();
+                  setSelectedID(hd.hamletId);
+                }}
+              >
+                <p>{hd.title}</p>
+                <DelBtn>
+                  <div />
+                </DelBtn>
+              </OneHamlet>
+            ))}
         </Scroll>
         <NewHemlet onClick={onModal}>
           <p>새 햄릿 추가</p>
           <div />
         </NewHemlet>
       </MyHamlets>
-      {showModal && <AddNewHamlet offModal={offModal} />}
+      {showModal && (
+        <AddNewHamlet offModal={offModal} id={selectedId as number} />
+      )}
     </>
   );
 };

@@ -1,26 +1,40 @@
 import styled from "styled-components";
 
 interface props {
-  id: number;
-  content: string;
+  // hamletId: number;
+  contents: string;
   isAnswer: boolean;
-  setExample: (id: number, data: string) => void;
+  onChangeExample: (id: number, input: string) => void;
   checkAnswer: (id: number) => void;
+  id: number;
 }
 
-const Example = ({ id, content, isAnswer, setExample, checkAnswer }: props) => {
-  const onChange = (e: any) => {
-    setExample(id, e.target.value);
-  };
+const Example = ({
+  // hamletId,
+  contents,
+  isAnswer = true,
+  onChangeExample,
+  id,
+  checkAnswer,
+}: props) => {
+  // const onChange = (e: any) => {
+  //   setExample(hamletId, e.target.value);
+  // };
 
-  const Answer = () => {
-    checkAnswer(id);
-  };
+  // const Answer = () => {
+  //   checkAnswer(hamletId);
+  // };
 
   return (
     <OneExample>
-      <ExampleText value={content} onChange={onChange} placeholder="보기" />
-      <AnswerCheck isAnswer={isAnswer} onClick={Answer}>
+      {/* <ExampleText value={contents} onChange={onChange} placeholder="보기" /> */}
+      <ExampleText
+        value={contents}
+        placeholder="보기"
+        onChange={(e) => onChangeExample(id, e.target.value)}
+      />
+      {/* <AnswerCheck isAnswer={isAnswer} onClick={Answer}> */}
+      <AnswerCheck isAnswer={isAnswer}>
         <span />
       </AnswerCheck>
     </OneExample>

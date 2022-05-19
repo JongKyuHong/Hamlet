@@ -4,11 +4,12 @@ interface props {
   id: number;
   title: string;
   color: string;
+  onClick: (id: number) => void;
 }
 
-const OneQuestion = ({ id, title, color }: props) => {
+const OneQuestion = ({ id, title, color, onClick }: props) => {
   return (
-    <Question color={color}>
+    <Question color={color} onClick={() => onClick(id)}>
       <p>{`${id}. ${title}`}</p>
       <DelBtn>
         <div />

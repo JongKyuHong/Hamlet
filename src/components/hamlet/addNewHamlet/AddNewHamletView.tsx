@@ -1,18 +1,56 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import CreateQuestion from "../CreateQuestion";
+import { config } from "../../../rest";
+import { Questtions } from "../../Type/Hamlets/Hamlets";
 import HamletInfo from "../myHamlet/HamletInfo";
+import axios from "axios";
+import CreateQuestion from "../CreateQuestion";
 
 interface props {
   offModal: () => void;
+  id: number;
 }
 
-const AddNewHamletView = ({ offModal }: props) => {
+const AddNewHamletView = ({ offModal, id }: props) => {
+  const [questtions, setQuesttions] = useState<Questtions[]>();
+  const [selectedQuestions, setSelectedQuestions] = useState<Questtions>();
+
+  const getHamlets = async () => {
+    try {
+      const response = await axios.get(
+        `http://k6a206.p.ssafy.io:8080/questions/${id}`,
+        config
+      );
+      setQuesttions(response.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const getQuestions = async (selectedQuesttionsId: number) => {
+    try {
+      const response = await axios.get(
+        `http://k6a206.p.ssafy.io:8080/questions/${id}/${selectedQuesttionsId}`,
+        config
+      );
+      setSelectedQuestions(response.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getHamlets();
+  }, []);
+
   return (
     <Frame>
       <Blur />
       <Modal>
-        <HamletInfo />
-        <CreateQuestion />
+        <HamletInfo questtions={questtions} onClick={getQuestions} />
+        {selectedQuestions && (
+          <CreateQuestion selectedQuestions={selectedQuestions} />
+        )}
         <ModalOff onClick={offModal}>
           <div />
         </ModalOff>

@@ -102,7 +102,7 @@ function Login() {
         </StyledDiv>
         <StyledDiv>
           <StyledSubmit type="submit" value='로그인' />
-          <StyledButton onClick={ () => {navigate('/')}}>돌아가기</StyledButton>
+          <StyledButton onClick={() => {navigate('/')}}>돌아가기</StyledButton>
         </StyledDiv>
       </StyledForm>
     </StyledLogin>

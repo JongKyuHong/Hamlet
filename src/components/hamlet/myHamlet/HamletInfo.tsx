@@ -1,62 +1,29 @@
 import styled from "styled-components";
 import OneQuestion from "../OneQuestion";
+import { Questtions } from "../../Type/Hamlets/Hamlets";
 
-const Questions = [
-  {
-    id: 1,
-    title: "SSAFY의 어느 캠퍼스에 다니시나요?",
-    color: "#FF92F1",
-  },
-  {
-    id: 2,
-    title: "SSAFY의 어느 캠퍼스에 다니시나요?",
-    color: "#FFB34F",
-  },
-  {
-    id: 3,
-    title: "SSAFY의 어느 캠퍼스에 다니시나요?",
-    color: "#87BAF9",
-  },
-  {
-    id: 4,
-    title: "SSAFY의 어느 캠퍼스에 다니시나요?",
-    color: "#87BAF9",
-  },
-  {
-    id: 5,
-    title: "SSAFY의 어느 캠퍼스에 다니시나요?",
-    color: "#87BAF9",
-  },
-  {
-    id: 6,
-    title: "SSAFY의 어느 캠퍼스에 다니시나요?",
-    color: "#87BAF9",
-  },
-  {
-    id: 7,
-    title: "SSAFY의 어느 캠퍼스에 다니시나요?",
-    color: "#87BAF9",
-  },
-  {
-    id: 8,
-    title: "SSAFY의 어느 캠퍼스에 다니시나요?",
-    color: "#87BAF9",
-  },
-  {
-    id: 9,
-    title: "SSAFY의 어느 캠퍼스에 다니시나요?",
-    color: "#87BAF9",
-  },
-];
+const colors = ["#FF92F1", "#FFB34F", "#87BAF9"];
 
-const HamletInfo = () => {
+interface props {
+  questtions?: Questtions[];
+  onClick: (id: number) => void;
+}
+
+const HamletInfo = ({ questtions, onClick }: props) => {
   return (
     <HamletInfoSection>
       <HamletTitle placeholder="새 햄릿" />
       <QuestionSection>
         <QuestionList>
-          {Questions.map((q) => (
-            <OneQuestion key={q.id} {...q} />
+          {questtions?.map((q, index) => (
+            <OneQuestion
+              id={q.questionId}
+              color={colors[index] || "#87BAF9"}
+              key={q.questionId}
+              title={q.contents}
+              onClick={onClick}
+              {...q}
+            />
           ))}
         </QuestionList>
         <AddBtn>생성하기</AddBtn>
