@@ -3,7 +3,7 @@
 ### 🎉 프로젝트 소개
 
 ```Hamlet```은 **싸피인을 위한** 퀴즈 / 설문 프로젝트입니다.  
-**WebSocket*을 사용해서 실시간으로 접속한 유저들이 같이 게임을 즐길 수 있게 하였습니다.
+**WebSocket**을 사용해서 실시간으로 접속한 유저들이 같이 게임을 즐길 수 있게 하였습니다.
 
 * [Hamlet HOMEPAGE](http://forhamlet.net/)
 * [Hamlet NOTION](https://jungle-baseball-7aa.notion.site/Hamlet-SNS-1b4647260d264fcfa78c6ed35bf3521a)
